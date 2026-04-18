@@ -1,6 +1,11 @@
 import express from "express";
 import cors from "cors";
-import pino from "pino";
+import pinoHttp from "pino-http";
+import { logger } from "./utils/logger.js";
+
+const app = express();
+
+app.use(pinoHttp({ logger }));
 
 import {
   getContactsController,
