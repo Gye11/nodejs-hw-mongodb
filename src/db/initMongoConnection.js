@@ -2,11 +2,15 @@ import mongoose from "mongoose";
 
 export const initMongoConnection = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    const uri = process.env.MONGODB_URI;
 
-    console.log("Mongo connection successfully established!");
+    if (!uri) {
+      throw new Error("MONGODB_URI is undefined");
+    }
+
+    await mongoose.connect(uri);
   } catch (error) {
-    console.log(error);
-    process.exit(1);
+    console.error("Mongo connection error:", error);
+    throw error;
   }
 };
